@@ -56,7 +56,8 @@ export async function copyText(text) {
 export const go = (h) => { location.hash = h; };
 
 // ---------- поля ----------
-function fieldHtml(f, v) {
+function fieldHtml(f0, v) {
+  const f = typeof f0.label === 'function' ? { ...f0, label: f0.label(v) } : f0;
   const id = 'f_' + f.k;
   if (f.type === 'select') {
     return `<div><label class="lbl" for="${id}">${f.label}</label><div class="fld"><select id="${id}" data-k="${f.k}">${(typeof f.options === 'function' ? f.options(v) : f.options).map(([val, lab]) => `<option value="${esc(val)}"${String(v[f.k]) === String(val) ? ' selected' : ''}>${esc(lab)}</option>`).join('')}</select></div></div>`;
