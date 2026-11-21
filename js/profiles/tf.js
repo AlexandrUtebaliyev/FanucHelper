@@ -19,7 +19,9 @@ export const TF = {
   modules: [
     { id: 'taper', title: 'Конус', sub: 'D · d · L · α/2', cat: 'geo', icon: I.taper },
     { id: 'chamfer', title: 'Фаска / радиус', sub: 'C · R · точки', cat: 'geo', icon: I.chamfer },
+    { id: 'nose', title: 'Радиус пластины', sub: 'без G41/G42', cat: 'geo', icon: I.nose },
     { id: 'thread', title: 'Резьба', sub: 'G76 · G92', cat: 'cyc', icon: I.thread },
+    { id: 'contour', title: 'Контур', sub: 'G71 · G70 · G72', cat: 'cyc', icon: I.contour },
     { id: 'modes', title: 'Режимы', sub: 'Vc · S · f · Ra', cat: 'mode', icon: I.modes },
   ],
 };

@@ -58,3 +58,52 @@ export function g92Lines(o) {
   }
   return lines;
 }
+
+// ---------- G71 / G72 / G73 + G70 ----------
+import { buildContour, contourBlocks, checkMonotonic, reverseSegs } from '../core/contour.js';
+import { word as _w } from './format.js';
+
+// rows — таблица контура; возвращает { lines, warn, segs } или бросает Error (код не выводится)
+export function roughingLines(o) {
+  assertSystemA(o.gsys);
+  const dec = o.dec ?? 3;
+  const { rows, cycle = 'G71', side = 'ext', holder = 'rear', dd, e, u, w, fRough, fFinish, blank, ns = 10, nf = 60, zApproach = 2 } = o;
+  if (!(nf > ns)) throw new Error('Номер N конца контура должен быть больше номера начала');
+  if (!(dd > 0) || !(e >= 0)) throw new Error('Задайте глубину прохода Δd > 0 и отвод e ≥ 0');
+  if (!(fRough > 0) || !(fFinish > 0)) throw new Error('Задайте подачи: черновую и чистовую');
+  if (!(blank > 0)) throw new Error(side === 'int' ? 'Задайте Ø предварительного отверстия' : 'Задайте Ø заготовки');
+  const built = buildContour(rows, { holder, side });
+  if (built.errors.length) throw new Error(built.errors[0]);
+  let segs = built.segs;
+  const warn = [];
+  const maxD = Math.max(...rows.map((r) => r.d));
+  const minD = Math.min(...rows.map((r) => r.d));
+  if (side === 'ext' && maxD > blank + 1e-9) warn.push(`Ø контура ${fmt(maxD, 3)} больше заготовки ${fmt(blank, 3)}`);
+  if (side === 'int' && minD < blank - 1e-9) warn.push(`Ø контура ${fmt(minD, 3)} меньше отверстия ${fmt(blank, 3)}`);
+  if (cycle !== 'G73') {
+    const mono = checkMonotonic(cycle === 'G72' ? reverseSegs(segs) : segs, { mode: cycle, side: side === 'int' ? 'int' : 'ext' });
+    if (!mono.ok) throw new Error(`${mono.issues[0].text}. Для такого профиля G71/G72 не подходят — выберите G73`);
+  }
+  const finishSegs = typeof o.transform === 'function' ? o.transform(segs) : segs; // ручная компенсация r
+  const clear = Math.max(e, 1);
+  const startX = side === 'int' ? blank - 2 * clear : blank + 2 * clear;
+  const uVal = side === 'int' ? -Math.abs(u ?? 0) : Math.abs(u ?? 0);
+  const body = contourBlocks(finishSegs, { dec, holder, mode: cycle === 'G72' ? 'G72' : 'G71', ns, nf, fFinish, startX, startZ: zApproach });
+  const lines = [join('G00', _w('X', startX, dec), _w('Z', zApproach, dec))];
+  if (cycle === 'G71') {
+    lines.push(join('G71', _w('U', dd, dec), _w('R', e, dec)));
+    lines.push(join('G71', 'P' + ns, 'Q' + nf, _w('U', uVal, dec), _w('W', w ?? 0, dec), _w('F', fRough, dec)));
+  } else if (cycle === 'G72') {
+    lines.push(join('G72', _w('W', dd, dec), _w('R', e, dec)));
+    lines.push(join('G72', 'P' + ns, 'Q' + nf, _w('U', uVal, dec), _w('W', w ?? 0, dec), _w('F', fRough, dec)));
+  } else {
+    const radial = Math.abs(blank - (side === 'int' ? maxD : minD)) / 2 + Math.abs(u ?? 0) / 2;
+    const passes = Math.max(1, Math.ceil(radial / dd));
+    warn.push('G73: припуск и число проходов рассчитаны ориентировочно (Δi = перепад Ø/2 + припуск, R = Δi/Δd). Проверьте в графике: цикл идёт по эквидистантам контура.');
+    lines.push(join('G73', _w('U', side === 'int' ? -radial : radial, dec), _w('W', 0, dec), 'R' + passes));
+    lines.push(join('G73', 'P' + ns, 'Q' + nf, _w('U', uVal, dec), _w('W', w ?? 0, dec), _w('F', fRough, dec)));
+  }
+  lines.push(...body);
+  lines.push(join('G70', 'P' + ns, 'Q' + nf, _w('F', fFinish, dec)));
+  return { lines, warn, segs, startX };
+}

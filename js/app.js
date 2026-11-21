@@ -8,6 +8,10 @@ const ROUTES = {
   chamfer: () => import('./ui/chamfer.js'),
   thread: () => import('./ui/thread.js'),
   modes: () => import('./ui/modes.js'),
+  nose: () => import('./ui/nose.js'),
+  contour: () => import('./ui/contour.js'),
+  backplot: () => import('./ui/backplot.js'),
+  backplotmf: () => import('./ui/backplot.js'),
   settings: () => import('./ui/settings.js'),
 };
 
