@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Сборщик программы</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#121417}
+a{color:#F5A524}a:hover{color:#FFC25C}
+.top{display:flex;align-items:center;gap:8px;height:56px;padding:0 12px 0 16px;border-bottom:1px solid #2C323A}
+.chip{font:500 12px 'JetBrains Mono',monospace;color:#9AA4B1;border:1px solid #2C323A;border-radius:6px;padding:4px 8px}
+.lbl{display:block;font-size:13px;color:#9AA4B1;margin-bottom:6px}
+.fld{display:flex;align-items:center;gap:8px;height:52px;box-sizing:border-box;background:#0E1013;border:1px solid #2C323A;border-radius:10px;padding:0 12px}
+.fld input{flex:1;min-width:0;width:100%;background:transparent;border:0;outline:none;color:#ECEFF3;font:500 19px 'JetBrains Mono',ui-monospace,monospace}
+.blk{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 4px 0 6px;background:#1C2026;border:1px solid #2C323A;border-radius:12px}
+.blk .t{font:700 12px 'JetBrains Mono',monospace;padding:3px 6px;border-radius:5px;background:#2C323A;color:#ECEFF3}
+.blk .x{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.blk .x b{font-size:15px;font-weight:600}
+.blk .x span{font:500 12px 'JetBrains Mono',monospace;color:#9AA4B1}
+.ib{width:44px;height:44px;display:flex;align-items:center;justify-content:center;border:0;border-radius:10px;background:transparent;color:#9AA4B1}
+.code{padding:10px 12px;background:#0E1013;border:1px solid #2C323A;border-radius:12px;font:400 13px/1.6 'JetBrains Mono',ui-monospace,monospace;color:#ECEFF3}
+.code div{white-space:pre}
+.g{color:#F5A524}.m{color:#FF7AB6}.a{color:#7DB8FF}.f{color:#6FD08C}.p{color:#C9A2FF}.n{color:#8B95A3}.c{color:#8B95A3;font-style:italic}.v{color:#5FD3D3}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 14px;border-radius:12px;font:600 15px Inter,sans-serif;border:1px solid #2C323A;background:#1C2026;color:#ECEFF3}
+.btn.pri{background:#F5A524;border-color:#F5A524;color:#141210}
+.h2{margin:0;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9AA4B1}
+.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #2C323A;background:#16191D}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 16px;font-size:12px;color:#9AA4B1;text-decoration:none}
+.nav a.on{color:#F5A524}
+</style>
+</helmet>
+<div style="width:390px;height:1060px;box-sizing:border-box;display:flex;flex-direction:column;background:#121417;color:#ECEFF3;font-family:Inter,system-ui,sans-serif">
+  <header class="top">
+    <h1 style="margin:0;flex:1;font-size:20px;font-weight:600">Программа</h1>
+    <a href="ImportCheck.dc.html" style="display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:9px;border:1px solid #5FD3D366;background:#5FD3D31A;color:#5FD3D3;font:600 13px Inter,sans-serif;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20V9M7 14l5-5 5 5M5 4h14"></path></svg>Импорт</a>
+    <span class="chip">CRLF · %</span>
+  </header>
+
+  <div style="display:flex;flex-direction:column;gap:14px;padding:14px 16px">
+    <div style="display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px">
+      <div><label class="lbl" for="pO">Номер</label><div class="fld"><input id="pO" value="O1001"></div></div>
+      <div><label class="lbl" for="pN">Название</label><div class="fld"><input id="pN" value="Вал-12" style="font-family:Inter,sans-serif"></div></div>
+    </div>
+    <div style="margin-top:-6px;font:500 13px 'JetBrains Mono',monospace;color:#9AA4B1">в стойку уйдёт: (VAL-12)</div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <h2 class="h2">Блоки · 5</h2>
+      <label style="display:flex;align-items:center;gap:8px;font-size:14px;color:#C7CED8">Нумерация N, шаг 10 <input type="checkbox" checked style="width:22px;height:22px;accent-color:#F5A524"></label>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="blk">
+        <svg width="16" height="20" viewBox="0 0 16 20" fill="#5A626D" aria-hidden="true"><circle cx="5" cy="5" r="1.6"></circle><circle cx="11" cy="5" r="1.6"></circle><circle cx="5" cy="10" r="1.6"></circle><circle cx="11" cy="10" r="1.6"></circle><circle cx="5" cy="15" r="1.6"></circle><circle cx="11" cy="15" r="1.6"></circle></svg>
+        <div class="x"><b>Шапка</b><span>G21 G40 G99 · G28 U0 W0</span></div>
+        <span class="t" style="background:transparent;color:#9AA4B1">авто</span>
+        <button class="ib" type="button" aria-label="Изменить шапку"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg></button>
+      </div>
+      <div class="blk" style="border-color:#F5A524">
+        <svg width="16" height="20" viewBox="0 0 16 20" fill="#5A626D" aria-hidden="true"><circle cx="5" cy="5" r="1.6"></circle><circle cx="11" cy="5" r="1.6"></circle><circle cx="5" cy="10" r="1.6"></circle><circle cx="11" cy="10" r="1.6"></circle><circle cx="5" cy="15" r="1.6"></circle><circle cx="11" cy="15" r="1.6"></circle></svg>
+        <div class="x"><b>Черновой контур</b><span>G71 · P10 Q60</span></div>
+        <span class="t">T0101</span>
+        <button class="ib" type="button" aria-label="Удалить блок"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"></path></svg></button>
+      </div>
+      <div class="blk">
+        <svg width="16" height="20" viewBox="0 0 16 20" fill="#5A626D" aria-hidden="true"><circle cx="5" cy="5" r="1.6"></circle><circle cx="11" cy="5" r="1.6"></circle><circle cx="5" cy="10" r="1.6"></circle><circle cx="11" cy="10" r="1.6"></circle><circle cx="5" cy="15" r="1.6"></circle><circle cx="11" cy="15" r="1.6"></circle></svg>
+        <div class="x"><b>Чистовой контур</b><span>G70 · P10 Q60</span></div>
+        <span class="t">T0202</span>
+        <button class="ib" type="button" aria-label="Удалить блок"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"></path></svg></button>
+      </div>
+      <div class="blk">
+        <svg width="16" height="20" viewBox="0 0 16 20" fill="#5A626D" aria-hidden="true"><circle cx="5" cy="5" r="1.6"></circle><circle cx="11" cy="5" r="1.6"></circle><circle cx="5" cy="10" r="1.6"></circle><circle cx="11" cy="10" r="1.6"></circle><circle cx="5" cy="15" r="1.6"></circle><circle cx="11" cy="15" r="1.6"></circle></svg>
+        <div class="x"><b>Резьба M20×2.5</b><span>G76 · Z-30.</span></div>
+        <span class="t">T0303</span>
+        <button class="ib" type="button" aria-label="Удалить блок"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14M10 7V4h4v3M7 7l1 13h8l1-13"></path></svg></button>
+      </div>
+      <div class="blk">
+        <svg width="16" height="20" viewBox="0 0 16 20" fill="#5A626D" aria-hidden="true"><circle cx="5" cy="5" r="1.6"></circle><circle cx="11" cy="5" r="1.6"></circle><circle cx="5" cy="10" r="1.6"></circle><circle cx="11" cy="10" r="1.6"></circle><circle cx="5" cy="15" r="1.6"></circle><circle cx="11" cy="15" r="1.6"></circle></svg>
+        <div class="x"><b>Концовка</b><span>G28 U0 W0 · M05 · M30</span></div>
+        <span class="t" style="background:transparent;color:#9AA4B1">авто</span>
+        <button class="ib" type="button" aria-label="Изменить концовку"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"></path></svg></button>
+      </div>
+    </div>
+
+    <section style="display:flex;flex-direction:column;gap:8px">
+      <h2 class="h2">Просмотр</h2>
+      <div class="code" style="height:226px;overflow-y:auto">
+        <div>%</div>
+        <div>O1001 <span class="c">(VAL-12)</span></div>
+        <div><span class="n">N10</span> <span class="g">G21 G40 G99</span></div>
+        <div><span class="n">N20</span> <span class="g">G28</span> <span class="a">U0</span> <span class="a">W0</span></div>
+        <div><span class="n">N30</span> <span class="f">T0101</span> <span class="c">(CHERNOVOY)</span></div>
+        <div><span class="n">N40</span> <span class="g">G50</span> <span class="f">S2000</span></div>
+        <div><span class="n">N50</span> <span class="g">G96</span> <span class="f">S180</span> <span class="m">M03</span></div>
+        <div><span class="n">N60</span> <span class="g">G00</span> <span class="a">X44.</span> <span class="a">Z2.</span></div>
+        <div><span class="n">N70</span> <span class="g">G71</span> <span class="a">U1.5</span> <span class="a">R0.5</span></div>
+        <div><span class="n">N80</span> <span class="g">G71</span> <span class="p">P100</span> <span class="p">Q150</span> <span class="a">U0.4</span> <span class="a">W0.1</span> <span class="f">F0.25</span></div>
+        <div class="c">…</div>
+      </div>
+    </section>
+
+    <div style="display:flex;gap:10px">
+      <button class="btn" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg>Копировать</button>
+      <button class="btn pri" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg>Экспорт .nc</button>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Разделы" style="margin-top:auto">
+    <a href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"></path></svg>Расчёты</a>
+    <a class="on" href="Program.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M10 13l-2 2 2 2M14 13l2 2-2 2"></path></svg>Программа</a>
+    <a href="Library.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Библиотека</a>
+    <a href="Settings.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>Настройки</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

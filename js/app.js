@@ -1,0 +1,43 @@
+// Роутинг по hash, инициализация.
+import { renderScreen, navHtml, topHtml } from './ui/kit.js';
+import { getSettings } from './store.js';
+
+const ROUTES = {
+  '': () => import('./ui/main.js'),
+  taper: () => import('./ui/taper.js'),
+  chamfer: () => import('./ui/chamfer.js'),
+  thread: () => import('./ui/thread.js'),
+  modes: () => import('./ui/modes.js'),
+  settings: () => import('./ui/settings.js'),
+};
+
+const app = document.getElementById('app');
+
+async function route() {
+  const key = location.hash.replace(/^#\/?/, '').split('?')[0];
+  const ctx = { settings: getSettings(), rerender: route };
+  // каждый экран получает свежий контейнер, старые слушатели уходят вместе с ним
+  const host = document.createElement('div');
+  host.style.cssText = 'flex:1;display:flex;flex-direction:column;min-width:0';
+  app.replaceChildren(host);
+  const loader = ROUTES[key];
+  if (!loader) {
+    host.innerHTML = `${topHtml('Не найдено')}<div class="page"><div class="note info">Экрана «${key.replace(/[<>&"]/g, '')}» нет.</div></div>${navHtml('#/')}`;
+    return;
+  }
+  try {
+    const mod = (await loader()).default;
+    if (mod.render) mod.render(host, ctx);
+    else renderScreen(host, mod, ctx);
+  } catch (e) {
+    host.innerHTML = `${topHtml('Ошибка')}<div class="page"><div class="note bad">${String(e.message).replace(/[<>&]/g, '')}</div></div>`;
+  }
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('hashchange', route);
+route();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => { /* офлайн недоступен (например, file://) */ });
+}

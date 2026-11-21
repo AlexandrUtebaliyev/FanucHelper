@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Резьбофрезерование</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#121417}
+a{color:#F5A524}a:hover{color:#FFC25C}
+.top{display:flex;align-items:center;gap:8px;height:56px;padding:0 12px 0 4px;border-bottom:1px solid #2C323A}
+.back{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#ECEFF3;border-radius:10px}
+.chip{font:600 12px 'JetBrains Mono',monospace;color:#F5A524;border:1px solid #F5A52466;background:#F5A5241A;border-radius:6px;padding:4px 8px}
+.card{background:#1C2026;border:1px solid #2C323A;border-radius:14px}
+.seg{display:grid;gap:4px;padding:4px;background:#0E1013;border:1px solid #2C323A;border-radius:12px}
+.seg button{height:42px;border:0;border-radius:9px;background:transparent;color:#C7CED8;font:500 14px Inter,sans-serif}
+.seg button.on{background:#2C323A;color:#ECEFF3}
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mini label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#9AA4B1}
+.mini input,.mini select{height:46px;width:100%;box-sizing:border-box;padding:0 10px;background:#0E1013;border:1px solid #2C323A;border-radius:10px;color:#ECEFF3;font:500 16px 'JetBrains Mono',monospace}
+.mini input.on{border-color:#F5A524;box-shadow:0 0 0 1px #F5A524}
+.kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.kpi div{padding:10px;border-radius:12px;background:#1C2026;border:1px solid #2C323A}
+.kpi span{display:block;font-size:12px;color:#9AA4B1}
+.kpi b{font:700 18px 'JetBrains Mono',monospace;color:#ECEFF3}
+.code{padding:10px 14px;background:#0E1013;border-radius:10px;font:400 13px/1.65 'JetBrains Mono',ui-monospace,monospace;color:#ECEFF3}
+.code div{white-space:pre}
+.g{color:#F5A524}.m{color:#FF7AB6}.a{color:#7DB8FF}.f{color:#6FD08C}.p{color:#C9A2FF}.n{color:#8B95A3}.c{color:#8B95A3;font-style:italic}.v{color:#5FD3D3}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 14px;border-radius:12px;font:600 15px Inter,sans-serif;border:1px solid #2C323A;background:#1C2026;color:#ECEFF3;text-decoration:none}
+.btn.pri{background:#F5A524;border-color:#F5A524;color:#141210}
+.h2{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9AA4B1}
+.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #2C323A;background:#16191D}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 16px;font-size:12px;color:#9AA4B1;text-decoration:none}
+.nav a.on{color:#F5A524}
+</style>
+</helmet>
+<div style="width:390px;height:1060px;box-sizing:border-box;display:flex;flex-direction:column;background:#121417;color:#ECEFF3;font-family:Inter,system-ui,sans-serif">
+  <header class="top">
+    <a class="back" href="MainMF.dc.html" aria-label="Назад"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <h1 style="margin:0;flex:1;font-size:20px;font-weight:600">Резьбофреза</h1>
+    <span class="chip">G03 + Z</span>
+  </header>
+
+  <div style="display:flex;flex-direction:column;gap:12px;padding:12px 16px">
+    <div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <button class="on" type="button">Внутренняя</button>
+      <button type="button">Наружная</button>
+    </div>
+
+    <div class="card" style="padding:6px">
+      <svg width="100%" viewBox="0 0 340 140" role="img" aria-label="Слева вид сверху: отверстие Ø20, фреза Ø14 смещена на радиус 3; справа вид сбоку: винтовая траектория снизу вверх">
+        <circle cx="90" cy="70" r="60" fill="#0E1013" stroke="#ECEFF3" stroke-width="2"></circle>
+        <circle cx="90" cy="70" r="18" fill="none" stroke="#FF7AB6" stroke-width="2" stroke-dasharray="5 3"></circle>
+        <circle cx="108" cy="70" r="42" fill="#F5A524" fill-opacity="0.14" stroke="#F5A524" stroke-width="1.5"></circle>
+        <path d="M86 70h8M90 66v8" stroke="#9AA4B1"></path>
+        <text x="8" y="16" fill="#C7CED8" font-size="11" font-family="JetBrains Mono">M20</text>
+        <text x="122" y="120" fill="#F5A524" font-size="11" font-family="JetBrains Mono">Ø14</text>
+        <text x="58" y="64" fill="#FF7AB6" font-size="11" font-family="JetBrains Mono">R3</text>
+        <rect x="200" y="10" width="20" height="120" fill="#232830"></rect>
+        <rect x="300" y="10" width="20" height="120" fill="#232830"></rect>
+        <path d="M260 126 L300 116 M220 106 L300 96 M220 86 L300 76 M220 66 L300 56 M220 46 L300 36 M220 26 L300 16" stroke="#FF7AB6" stroke-width="2"></path>
+        <path d="M300 116 L220 106 M300 96 L220 86 M300 76 L220 66 M300 56 L220 46 M300 36 L220 26" stroke="#FF7AB6" stroke-width="1.5" stroke-opacity="0.35" stroke-dasharray="3 3"></path>
+        <path d="M330 120 V24" stroke="#9AA4B1" stroke-width="1.5"></path><path d="M326 30 l4 -8 4 8" fill="none" stroke="#9AA4B1" stroke-width="1.5"></path>
+        <text x="226" y="138" fill="#9AA4B1" font-size="10" font-family="JetBrains Mono">снизу вверх</text>
+      </svg>
+    </div>
+
+    <div class="mini">
+      <label>Резьба<select><option>M20×2.5</option><option>M16×2</option><option>M24×3</option></select></label>
+      <label>Ø фрезы<input class="on" inputmode="decimal" value="14"></label>
+      <label>Глубина Z<input inputmode="decimal" value="-20"></label>
+      <label>Центр X<input inputmode="decimal" value="0"></label>
+      <label>Центр Y<input inputmode="decimal" value="0"></label>
+      <label>F кромки<input inputmode="decimal" value="250"></label>
+    </div>
+
+    <div class="kpi">
+      <div><span>Радиус пути</span><b>3.000</b></div>
+      <div><span>Витков</span><b>7 + 2×½</b></div>
+      <div><span>F центра</span><b>F75</b></div>
+    </div>
+    <div style="margin-top:-4px;font-size:12px;color:#9AA4B1">F центра = F кромки × (20 − 14) / 20 — иначе на кромке будет перегруз.</div>
+
+    <section>
+      <h2 class="h2">G-код · попутное, правая резьба</h2>
+      <div class="code">
+        <div><span class="g">G90 G00</span> <span class="a">X0.</span> <span class="a">Y0.</span> <span class="a">Z2.</span></div>
+        <div><span class="g">G01</span> <span class="a">Z-20.</span> <span class="f">F500.</span></div>
+        <div><span class="g">G03</span> <span class="a">X3.</span> <span class="a">Y0.</span> <span class="a">Z-18.75</span> <span class="a">R1.5</span> <span class="f">F75.</span></div>
+        <div><span class="g">G03</span> <span class="a">X3.</span> <span class="a">Y0.</span> <span class="a">Z-16.25</span> <span class="a">I-3.</span> <span class="a">J0.</span></div>
+        <div><span class="g">G03</span> <span class="a">X3.</span> <span class="a">Y0.</span> <span class="a">Z-13.75</span> <span class="a">I-3.</span> <span class="a">J0.</span></div>
+        <div class="c">( ... ещё 5 витков до Z-1.25 )</div>
+        <div><span class="g">G03</span> <span class="a">X0.</span> <span class="a">Y0.</span> <span class="a">Z0.</span> <span class="a">R1.5</span></div>
+        <div><span class="g">G00</span> <span class="a">Z50.</span></div>
+      </div>
+    </section>
+
+    <div style="display:flex;gap:10px">
+      <a class="btn" href="BackplotMF.dc.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>На эскизе</a>
+      <a class="btn pri" href="Program.dc.html">В программу</a>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Разделы" style="margin-top:auto">
+    <a class="on" href="MainMF.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"></path></svg>Расчёты</a>
+    <a href="Program.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M10 13l-2 2 2 2M14 13l2 2-2 2"></path></svg>Программа</a>
+    <a href="Library.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Библиотека</a>
+    <a href="Settings.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>Настройки</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

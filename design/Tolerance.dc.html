@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Допуски ISO 286</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#121417}
+a{color:#F5A524}a:hover{color:#FFC25C}
+.top{display:flex;align-items:center;gap:8px;height:56px;padding:0 12px 0 4px;border-bottom:1px solid #2C323A}
+.back{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#ECEFF3;border-radius:10px}
+.chip{font:600 12px 'JetBrains Mono',monospace;color:#6FB3FF;border:1px solid #6FB3FF66;background:#6FB3FF1A;border-radius:6px;padding:4px 8px}
+.card{background:#1C2026;border:1px solid #2C323A;border-radius:14px}
+.seg{display:grid;gap:4px;padding:4px;background:#0E1013;border:1px solid #2C323A;border-radius:12px}
+.seg button{height:42px;border:0;border-radius:9px;background:transparent;color:#C7CED8;font:500 14px Inter,sans-serif}
+.seg button.on{background:#2C323A;color:#ECEFF3}
+.keys{display:grid;gap:6px}
+.keys button{height:44px;border-radius:10px;border:1px solid #2C323A;background:#1C2026;color:#C7CED8;font:600 16px 'JetBrains Mono',monospace}
+.keys button.on{background:#6FB3FF;border-color:#6FB3FF;color:#0E1013}
+.lbl{display:block;font-size:12px;color:#9AA4B1;margin-bottom:6px}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid #262B32}
+.row b{font:600 17px 'JetBrains Mono',monospace}
+.row span{font-size:14px;color:#9AA4B1}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 14px;border-radius:12px;font:600 15px Inter,sans-serif;border:1px solid #2C323A;background:#1C2026;color:#ECEFF3}
+.btn.pri{background:#F5A524;border-color:#F5A524;color:#141210}
+.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #2C323A;background:#16191D}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 16px;font-size:12px;color:#9AA4B1;text-decoration:none}
+.nav a.on{color:#F5A524}
+</style>
+</helmet>
+<div style="width:390px;height:1060px;box-sizing:border-box;display:flex;flex-direction:column;background:#121417;color:#ECEFF3;font-family:Inter,system-ui,sans-serif">
+  <header class="top">
+    <a class="back" href="Main.dc.html" aria-label="Назад"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <h1 style="margin:0;flex:1;font-size:20px;font-weight:600">Допуски ISO</h1>
+    <span class="chip">ISO 286</span>
+  </header>
+
+  <div style="display:flex;flex-direction:column;gap:12px;padding:12px 16px">
+    <div style="display:flex;align-items:center;gap:10px;height:64px;padding:0 16px;background:#0E1013;border:1px solid #6FB3FF;box-shadow:0 0 0 1px #6FB3FF;border-radius:12px">
+      <span style="font:500 18px Inter,sans-serif;color:#9AA4B1">Ø</span>
+      <label for="tolIn" style="position:absolute;left:-9999px">Размер с допуском</label>
+      <input id="tolIn" value="20 h7" style="flex:1;min-width:0;background:transparent;border:0;outline:none;color:#ECEFF3;font:700 28px 'JetBrains Mono',monospace">
+      <span style="font-size:13px;color:#9AA4B1">мм</span>
+    </div>
+
+    <div class="seg" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+      <button class="on" type="button">Вал · строчные</button>
+      <button type="button">Отверстие · ЗАГЛАВНЫЕ</button>
+    </div>
+
+    <div>
+      <span class="lbl">Основное отклонение</span>
+      <div class="keys" style="grid-template-columns:repeat(8,minmax(0,1fr))">
+        <button type="button">e</button><button type="button">f</button><button type="button">g</button><button class="on" type="button">h</button><button type="button">js</button><button type="button">k</button><button type="button">m</button><button type="button">p</button>
+      </div>
+    </div>
+    <div>
+      <span class="lbl">Квалитет IT</span>
+      <div class="keys" style="grid-template-columns:repeat(6,minmax(0,1fr))">
+        <button type="button">5</button><button type="button">6</button><button class="on" type="button">7</button><button type="button">8</button><button type="button">9</button><button type="button">11</button>
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px">
+      <svg width="100%" viewBox="0 0 340 120" role="img" aria-label="Поле допуска h7: от 0 до минус 0,021 ниже номинала, середина минус 0,0105">
+        <line x1="20" y1="30" x2="320" y2="30" stroke="#ECEFF3" stroke-width="1.5"></line>
+        <text x="20" y="22" fill="#9AA4B1" font-size="11" font-family="JetBrains Mono">номинал 20.000</text>
+        <rect x="130" y="30" width="80" height="63" fill="#6FB3FF" fill-opacity="0.18" stroke="#6FB3FF" stroke-width="1.5"></rect>
+        <line x1="120" y1="61.5" x2="220" y2="61.5" stroke="#F5A524" stroke-width="2.5" stroke-dasharray="6 3"></line>
+        <text x="228" y="34" fill="#C7CED8" font-size="12" font-family="JetBrains Mono">es  0</text>
+        <text x="228" y="66" fill="#F5A524" font-size="12" font-weight="700" font-family="JetBrains Mono">−0.0105</text>
+        <text x="228" y="97" fill="#C7CED8" font-size="12" font-family="JetBrains Mono">ei −0.021</text>
+        <text x="148" y="112" fill="#6FB3FF" font-size="12" font-weight="700" font-family="JetBrains Mono">h7</text>
+      </svg>
+    </div>
+
+    <div class="card" style="padding:2px 14px">
+      <div class="row"><span>Наибольший</span><b>20.000</b></div>
+      <div class="row"><span>Наименьший</span><b>19.979</b></div>
+      <div class="row" style="border-bottom:0"><span>Допуск IT7</span><b>0.021</b></div>
+    </div>
+
+    <div>
+      <span class="lbl">Программировать на</span>
+      <div class="seg" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <button type="button">Верх</button><button class="on" type="button">Середину</button><button type="button">Низ</button>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-radius:14px;background:#6FB3FF14;border:1px solid #6FB3FF66">
+      <div>
+        <div style="font-size:12px;color:#9AA4B1">В программу (3 знака)</div>
+        <div style="font:700 30px 'JetBrains Mono',monospace;color:#7DB8FF">X19.99</div>
+      </div>
+      <div style="text-align:right;font:500 12px 'JetBrains Mono',monospace;color:#9AA4B1">точно 19.9895<br>на TF — на Ø</div>
+    </div>
+
+    <div style="font-size:13px;color:#C7CED8">С отверстием <b style="font-family:'JetBrains Mono'">H7</b>: зазор 0…0.042 — посадка с зазором</div>
+
+    <div style="display:flex;gap:10px">
+      <button class="btn" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg>Копировать</button>
+      <a class="btn pri" href="Contour.dc.html" style="text-decoration:none">В контур</a>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Разделы" style="margin-top:auto">
+    <a class="on" href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"></path></svg>Расчёты</a>
+    <a href="Program.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M10 13l-2 2 2 2M14 13l2 2-2 2"></path></svg>Программа</a>
+    <a href="Library.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Библиотека</a>
+    <a href="Settings.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>Настройки</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

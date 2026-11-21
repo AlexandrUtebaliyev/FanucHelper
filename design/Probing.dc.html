@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Привязка и G10</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#121417}
+a{color:#F5A524}a:hover{color:#FFC25C}
+.top{display:flex;align-items:center;gap:8px;height:56px;padding:0 12px 0 4px;border-bottom:1px solid #2C323A}
+.back{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#ECEFF3;border-radius:10px}
+.chip{font:600 12px 'JetBrains Mono',monospace;color:#5FD3D3;border:1px solid #5FD3D366;background:#5FD3D31A;border-radius:6px;padding:4px 8px}
+.card{background:#1C2026;border:1px solid #2C323A;border-radius:14px}
+.seg{display:grid;gap:4px;padding:4px;background:#0E1013;border:1px solid #2C323A;border-radius:12px}
+.seg button{height:42px;border:0;border-radius:9px;background:transparent;color:#C7CED8;font:500 13px Inter,sans-serif}
+.seg button.on{background:#2C323A;color:#ECEFF3}
+.mini{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.mini label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#9AA4B1}
+.mini input{height:46px;width:100%;box-sizing:border-box;padding:0 10px;background:#0E1013;border:1px solid #2C323A;border-radius:10px;color:#ECEFF3;font:500 17px 'JetBrains Mono',monospace}
+.mini input.on{border-color:#5FD3D3;box-shadow:0 0 0 1px #5FD3D3}
+.row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid #262B32}
+.row b{font:600 17px 'JetBrains Mono',monospace}
+.row span{font-size:14px;color:#9AA4B1}
+.code{padding:10px 14px;background:#0E1013;border-radius:10px;font:400 15px/1.7 'JetBrains Mono',ui-monospace,monospace;color:#ECEFF3}
+.code div{white-space:pre}
+.g{color:#F5A524}.m{color:#FF7AB6}.a{color:#7DB8FF}.f{color:#6FD08C}.p{color:#C9A2FF}.n{color:#8B95A3}.c{color:#8B95A3;font-style:italic}.v{color:#5FD3D3}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 14px;border-radius:12px;font:600 15px Inter,sans-serif;border:1px solid #2C323A;background:#1C2026;color:#ECEFF3}
+.btn.pri{background:#F5A524;border-color:#F5A524;color:#141210}
+.h2{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9AA4B1}
+.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #2C323A;background:#16191D}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 16px;font-size:12px;color:#9AA4B1;text-decoration:none}
+.nav a.on{color:#F5A524}
+</style>
+</helmet>
+<div style="width:390px;height:1060px;box-sizing:border-box;display:flex;flex-direction:column;background:#121417;color:#ECEFF3;font-family:Inter,system-ui,sans-serif">
+  <header class="top">
+    <a class="back" href="MainMF.dc.html" aria-label="Назад"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <h1 style="margin:0;flex:1;font-size:20px;font-weight:600">Привязка</h1>
+    <span class="chip">G10 L2</span>
+  </header>
+
+  <div style="display:flex;flex-direction:column;gap:12px;padding:12px 16px">
+    <div class="seg" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+      <button type="button">Кромка</button>
+      <button class="on" type="button">Отверстие</button>
+      <button type="button">Бобышка</button>
+      <button type="button">Угол</button>
+    </div>
+
+    <div class="card" style="padding:6px">
+      <svg width="100%" viewBox="0 0 340 150" role="img" aria-label="Центр отверстия по четырём касаниям: X минус, X плюс, Y минус, Y плюс">
+        <rect x="60" y="8" width="220" height="134" rx="6" fill="#232830" stroke="#3A414B"></rect>
+        <circle cx="170" cy="75" r="52" fill="#0E1013" stroke="#ECEFF3" stroke-width="2"></circle>
+        <path d="M164 75h12M170 69v12" stroke="#5FD3D3" stroke-width="2"></path>
+        <path d="M170 75 L126 75 M170 75 L214 75 M170 75 L170 31 M170 75 L170 119" stroke="#5FD3D3" stroke-width="1.5" stroke-dasharray="4 3"></path>
+        <circle cx="123" cy="75" r="5" fill="#5FD3D3"></circle>
+        <circle cx="217" cy="75" r="5" fill="#5FD3D3"></circle>
+        <circle cx="170" cy="28" r="5" fill="#5FD3D3"></circle>
+        <circle cx="170" cy="122" r="5" fill="#5FD3D3"></circle>
+        <g font-family="JetBrains Mono" font-size="11" font-weight="700" fill="#5FD3D3">
+          <text x="94" y="70">X1</text><text x="228" y="70">X2</text><text x="178" y="26">Y2</text><text x="178" y="134">Y1</text>
+        </g>
+      </svg>
+    </div>
+
+    <div style="font-size:12px;color:#9AA4B1">Вводи машинные координаты (экран POS → MACHINE) в момент касания</div>
+    <div class="mini">
+      <label>X1, касание слева<input inputmode="decimal" value="-245.320"></label>
+      <label>X2, касание справа<input inputmode="decimal" value="-195.280"></label>
+      <label>Y1, касание снизу<input inputmode="decimal" value="-160.110"></label>
+      <label>Y2, касание сверху<input class="on" inputmode="decimal" value="-110.050"></label>
+      <label>Ø щупа<input inputmode="decimal" value="10"></label>
+      <label>Система<select style="height:46px;width:100%;box-sizing:border-box;padding:0 10px;background:#0E1013;border:1px solid #2C323A;border-radius:10px;color:#ECEFF3;font:500 17px 'JetBrains Mono',monospace"><option>G54 · P1</option><option>G55 · P2</option><option>G56 · P3</option></select></label>
+    </div>
+
+    <div class="card" style="padding:2px 14px">
+      <div class="row"><span>Центр X</span><b style="color:#5FD3D3">-220.300</b></div>
+      <div class="row"><span>Центр Y</span><b style="color:#5FD3D3">-135.080</b></div>
+      <div class="row"><span>Ø по X / по Y</span><b>60.040 / 60.060</b></div>
+      <div class="row" style="border-bottom:0"><span>Овальность</span><b style="color:#6FD08C">0.020</b></div>
+    </div>
+
+    <section>
+      <h2 class="h2">Запись в G54</h2>
+      <div class="code">
+        <div><span class="g">G90 G10</span> <span class="p">L2</span> <span class="p">P1</span> <span class="a">X-220.3</span> <span class="a">Y-135.08</span></div>
+      </div>
+      <div style="margin-top:6px;font-size:12px;color:#9AA4B1">Выполни в MDI — стойка сама запишет значения в таблицу G54. Z привязывается отдельно.</div>
+    </section>
+
+    <div style="display:flex;gap:10px">
+      <button class="btn" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg>Копировать</button>
+      <button class="btn pri" type="button">В журнал наладки</button>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Разделы" style="margin-top:auto">
+    <a class="on" href="MainMF.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"></path></svg>Расчёты</a>
+    <a href="Program.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M10 13l-2 2 2 2M14 13l2 2-2 2"></path></svg>Программа</a>
+    <a href="Library.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Библиотека</a>
+    <a href="Settings.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>Настройки</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

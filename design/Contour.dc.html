@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Конструктор контура G71</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#121417}
+a{color:#F5A524}a:hover{color:#FFC25C}
+.top{display:flex;align-items:center;gap:8px;height:56px;padding:0 12px 0 4px;border-bottom:1px solid #2C323A}
+.back{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#ECEFF3;border-radius:10px}
+.chip{font:600 12px 'JetBrains Mono',monospace;color:#F5A524;border:1px solid #F5A52466;background:#F5A5241A;border-radius:6px;padding:4px 8px}
+.card{background:#1C2026;border:1px solid #2C323A;border-radius:14px}
+.tbl{width:100%;border-collapse:collapse;font:500 15px 'JetBrains Mono',monospace}
+.tbl th{text-align:left;font:500 12px Inter,sans-serif;color:#9AA4B1;padding:8px 10px;border-bottom:1px solid #2C323A}
+.tbl td{padding:0 4px;height:44px;border-bottom:1px solid #262B32}
+.tbl input{width:100%;box-sizing:border-box;height:36px;padding:0 6px;background:transparent;border:1px solid transparent;border-radius:6px;color:#ECEFF3;font:500 15px 'JetBrains Mono',monospace}
+.tbl input.on{border-color:#F5A524;background:#0E1013}
+.tag{display:inline-block;font:600 12px 'JetBrains Mono',monospace;padding:3px 6px;border-radius:5px;background:#2C323A;color:#ECEFF3}
+.mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.mini label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#9AA4B1}
+.mini input{height:44px;box-sizing:border-box;padding:0 10px;background:#0E1013;border:1px solid #2C323A;border-radius:10px;color:#ECEFF3;font:500 17px 'JetBrains Mono',monospace}
+.code{padding:10px 14px;background:#0E1013;border-radius:10px;font:400 14px/1.65 'JetBrains Mono',ui-monospace,monospace;color:#ECEFF3}
+.code div{white-space:pre}
+.g{color:#F5A524}.m{color:#FF7AB6}.a{color:#7DB8FF}.f{color:#6FD08C}.p{color:#C9A2FF}.n{color:#8B95A3}.c{color:#8B95A3;font-style:italic}.v{color:#5FD3D3}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 14px;border-radius:12px;font:600 15px Inter,sans-serif;border:1px solid #2C323A;background:#1C2026;color:#ECEFF3}
+.btn.pri{background:#F5A524;border-color:#F5A524;color:#141210}
+.h2{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9AA4B1}
+.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #2C323A;background:#16191D}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 16px;font-size:12px;color:#9AA4B1;text-decoration:none}
+.nav a.on{color:#F5A524}
+</style>
+</helmet>
+<div style="width:390px;height:1060px;box-sizing:border-box;display:flex;flex-direction:column;background:#121417;color:#ECEFF3;font-family:Inter,system-ui,sans-serif">
+  <header class="top">
+    <a class="back" href="Main.dc.html" aria-label="Назад"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <h1 style="margin:0;flex:1;font-size:20px;font-weight:600">Контур</h1>
+    <span class="chip">G71 · тип I</span>
+  </header>
+
+  <div style="display:flex;flex-direction:column;gap:12px;padding:12px 16px">
+    <div class="card" style="padding:6px 8px">
+      <svg width="100%" viewBox="0 0 340 88" role="img" aria-label="Эскиз профиля вала: фаска, Ø20, уступ с радиусом, Ø30, торец до заготовки Ø42">
+        <line x1="6" y1="80" x2="334" y2="80" stroke="#3A414B" stroke-dasharray="8 4 2 4"></line>
+        <rect x="20" y="16" width="304" height="64" fill="none" stroke="#3A414B" stroke-dasharray="3 3"></rect>
+        <path d="M324 46 L318 40 L238 40 L238 30 Q238 26 234 26 L120 26 L120 16" fill="none" stroke="#F5A524" stroke-width="2.5"></path>
+        <text x="270" y="58" fill="#C7CED8" font-size="11" font-family="JetBrains Mono">Ø20</text>
+        <text x="170" y="44" fill="#C7CED8" font-size="11" font-family="JetBrains Mono">Ø30</text>
+        <text x="26" y="12" fill="#9AA4B1" font-size="10" font-family="JetBrains Mono">заготовка Ø42</text>
+      </svg>
+    </div>
+
+    <section class="card" style="overflow:hidden">
+      <table class="tbl">
+        <thead><tr><th style="width:28px">№</th><th>Ø X</th><th>Z</th><th>Угол</th></tr></thead>
+        <tbody>
+          <tr><td style="padding-left:10px;color:#9AA4B1">1</td><td><input aria-label="Ø точки 1" value="20"></td><td><input aria-label="Z точки 1" value="0"></td><td><span class="tag">C1</span></td></tr>
+          <tr><td style="padding-left:10px;color:#9AA4B1">2</td><td><input aria-label="Ø точки 2" value="20"></td><td><input aria-label="Z точки 2" value="-15"></td><td><span style="color:#8B95A3">—</span></td></tr>
+          <tr><td style="padding-left:10px;color:#9AA4B1">3</td><td><input aria-label="Ø точки 3" value="30"></td><td><input class="on" aria-label="Z точки 3" value="-15"></td><td><span class="tag" style="background:#F5A524;color:#141210">R0.5</span></td></tr>
+          <tr><td style="padding-left:10px;color:#9AA4B1">4</td><td><input aria-label="Ø точки 4" value="30"></td><td><input aria-label="Z точки 4" value="-40"></td><td><span style="color:#8B95A3">—</span></td></tr>
+          <tr><td style="padding-left:10px;color:#9AA4B1;border-bottom:0">5</td><td style="border-bottom:0"><input aria-label="Ø точки 5" value="42"></td><td style="border-bottom:0"><input aria-label="Z точки 5" value="-40"></td><td style="border-bottom:0"><span style="color:#8B95A3">—</span></td></tr>
+        </tbody>
+      </table>
+      <button type="button" style="width:100%;height:44px;border:0;border-top:1px solid #2C323A;background:#16191D;color:#F5A524;font:600 14px Inter,sans-serif">+ Добавить точку</button>
+    </section>
+
+    <div class="mini">
+      <label>Δd, на сторону<input inputmode="decimal" value="1.5"></label>
+      <label>Отвод e<input inputmode="decimal" value="0.5"></label>
+      <label>Ø заготовки<input inputmode="decimal" value="42"></label>
+      <label>Припуск Δu (Ø)<input inputmode="decimal" value="0.4"></label>
+      <label>Припуск Δw<input inputmode="decimal" value="0.1"></label>
+      <label>F черн / чист<input inputmode="decimal" value="0.25/0.1"></label>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-radius:10px;background:#16241A;border:1px solid #2E5A3A">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6FD08C" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>
+      <span style="font-size:14px;color:#BFE8CB">Профиль монотонный — подходит для G71 тип I</span>
+    </div>
+
+    <section>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <h2 class="h2" style="margin:0">G-код</h2>
+        <a href="Backplot.dc.html" style="display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-radius:9px;border:1px solid #FF7AB666;background:#FF7AB61A;color:#FF9FCB;font:600 13px Inter,sans-serif;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>Проверить на эскизе</a>
+      </div>
+      <div class="code" style="height:236px;overflow-y:auto">
+        <div><span class="g">G00</span> <span class="a">X44.</span> <span class="a">Z2.</span></div>
+        <div><span class="g">G71</span> <span class="a">U1.5</span> <span class="a">R0.5</span></div>
+        <div><span class="g">G71</span> <span class="p">P10</span> <span class="p">Q60</span> <span class="a">U0.4</span> <span class="a">W0.1</span> <span class="f">F0.25</span></div>
+        <div><span class="n">N10</span> <span class="g">G00</span> <span class="a">X18.</span></div>
+        <div><span class="g">G01</span> <span class="a">Z0.</span> <span class="f">F0.1</span></div>
+        <div><span class="a">X20.</span> <span class="a">Z-1.</span></div>
+        <div><span class="a">Z-15.</span></div>
+        <div><span class="a">X29.</span></div>
+        <div><span class="g">G03</span> <span class="a">X30.</span> <span class="a">Z-15.5</span> <span class="a">R0.5</span></div>
+        <div><span class="g">G01</span> <span class="a">Z-40.</span></div>
+        <div><span class="n">N60</span> <span class="a">X42.</span></div>
+        <div><span class="g">G70</span> <span class="p">P10</span> <span class="p">Q60</span></div>
+      </div>
+    </section>
+
+    <div style="display:flex;gap:10px">
+      <button class="btn" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg>Копировать</button>
+      <a class="btn pri" href="Program.dc.html" style="text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>В программу</a>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Разделы" style="margin-top:auto">
+    <a class="on" href="Main.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"></path></svg>Расчёты</a>
+    <a href="Program.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M10 13l-2 2 2 2M14 13l2 2-2 2"></path></svg>Программа</a>
+    <a href="Library.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Библиотека</a>
+    <a href="Settings.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>Настройки</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

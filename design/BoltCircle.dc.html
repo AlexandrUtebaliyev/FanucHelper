@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Отверстия по окружности</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#121417}
+a{color:#F5A524}a:hover{color:#FFC25C}
+.top{display:flex;align-items:center;gap:8px;height:56px;padding:0 12px 0 4px;border-bottom:1px solid #2C323A}
+.back{width:44px;height:44px;display:flex;align-items:center;justify-content:center;color:#ECEFF3;border-radius:10px}
+.chip{font:600 12px 'JetBrains Mono',monospace;color:#6FB3FF;border:1px solid #6FB3FF66;background:#6FB3FF1A;border-radius:6px;padding:4px 8px}
+.card{background:#1C2026;border:1px solid #2C323A;border-radius:14px}
+.mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.mini label{display:flex;flex-direction:column;gap:4px;font-size:12px;color:#9AA4B1}
+.mini input{height:46px;width:100%;box-sizing:border-box;padding:0 8px;background:#0E1013;border:1px solid #2C323A;border-radius:10px;color:#ECEFF3;font:500 17px 'JetBrains Mono',monospace}
+.mini input.on{border-color:#F5A524;box-shadow:0 0 0 1px #F5A524}
+.seg{display:grid;gap:4px;padding:4px;background:#0E1013;border:1px solid #2C323A;border-radius:12px}
+.seg button{height:40px;border:0;border-radius:9px;background:transparent;color:#C7CED8;font:600 14px 'JetBrains Mono',monospace}
+.seg button.on{background:#2C323A;color:#ECEFF3}
+.code{padding:10px 14px;background:#0E1013;border-radius:10px;font:400 14px/1.65 'JetBrains Mono',ui-monospace,monospace;color:#ECEFF3}
+.code div{white-space:pre}
+.g{color:#F5A524}.m{color:#FF7AB6}.a{color:#7DB8FF}.f{color:#6FD08C}.p{color:#C9A2FF}.n{color:#8B95A3}.c{color:#8B95A3;font-style:italic}.v{color:#5FD3D3}
+.btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;height:52px;padding:0 14px;border-radius:12px;font:600 15px Inter,sans-serif;border:1px solid #2C323A;background:#1C2026;color:#ECEFF3}
+.btn.pri{background:#F5A524;border-color:#F5A524;color:#141210}
+.h2{margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#9AA4B1}
+.nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid #2C323A;background:#16191D}
+.nav a{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 0 16px;font-size:12px;color:#9AA4B1;text-decoration:none}
+.nav a.on{color:#F5A524}
+</style>
+</helmet>
+<div style="width:390px;height:1060px;box-sizing:border-box;display:flex;flex-direction:column;background:#121417;color:#ECEFF3;font-family:Inter,system-ui,sans-serif">
+  <header class="top">
+    <a class="back" href="MainMF.dc.html" aria-label="Назад"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <h1 style="margin:0;flex:1;font-size:20px;font-weight:600">По окружности</h1>
+    <span class="chip">0i-MF · G17</span>
+  </header>
+
+  <div style="display:flex;flex-direction:column;gap:12px;padding:12px 16px">
+    <div class="card" style="padding:6px">
+      <svg width="100%" viewBox="0 0 340 170" role="img" aria-label="Вид сверху: 6 отверстий на окружности R50 вокруг центра 0,0, первое на 0°">
+        <line x1="20" y1="85" x2="320" y2="85" stroke="#3A414B" stroke-dasharray="8 4 2 4"></line>
+        <line x1="170" y1="6" x2="170" y2="164" stroke="#3A414B" stroke-dasharray="8 4 2 4"></line>
+        <circle cx="170" cy="85" r="70" fill="none" stroke="#5A626D" stroke-dasharray="4 4"></circle>
+        <line x1="170" y1="85" x2="240" y2="85" stroke="#F5A524" stroke-width="1.5"></line>
+        <circle cx="240" cy="85" r="7" fill="#F5A524"></circle>
+        <circle cx="205" cy="24.4" r="7" fill="none" stroke="#ECEFF3" stroke-width="2"></circle>
+        <circle cx="135" cy="24.4" r="7" fill="none" stroke="#ECEFF3" stroke-width="2"></circle>
+        <circle cx="100" cy="85" r="7" fill="none" stroke="#ECEFF3" stroke-width="2"></circle>
+        <circle cx="135" cy="145.6" r="7" fill="none" stroke="#ECEFF3" stroke-width="2"></circle>
+        <circle cx="205" cy="145.6" r="7" fill="none" stroke="#ECEFF3" stroke-width="2"></circle>
+        <text x="252" y="80" fill="#F5A524" font-size="12" font-weight="700" font-family="JetBrains Mono">1</text>
+        <text x="214" y="18" fill="#C7CED8" font-size="12" font-family="JetBrains Mono">2</text>
+        <text x="200" y="100" fill="#F5A524" font-size="11" font-family="JetBrains Mono">R50</text>
+        <text x="296" y="100" fill="#9AA4B1" font-size="11" font-family="JetBrains Mono">+X</text>
+        <text x="176" y="16" fill="#9AA4B1" font-size="11" font-family="JetBrains Mono">+Y</text>
+      </svg>
+    </div>
+
+    <div class="mini">
+      <label>Центр X<input inputmode="decimal" value="0"></label>
+      <label>Центр Y<input inputmode="decimal" value="0"></label>
+      <label>Радиус<input class="on" inputmode="decimal" value="50"></label>
+      <label>Кол-во<input inputmode="numeric" value="6"></label>
+      <label>Старт, °<input inputmode="decimal" value="0"></label>
+      <label>Z дна<input inputmode="decimal" value="-10"></label>
+      <label>R плоск.<input inputmode="decimal" value="2"></label>
+      <label>F<input inputmode="decimal" value="100"></label>
+    </div>
+
+    <div>
+      <div class="h2">Цикл</div>
+      <div class="seg" style="grid-template-columns:repeat(5,minmax(0,1fr))">
+        <button class="on" type="button">G81</button><button type="button">G82</button><button type="button">G83</button><button type="button">G73</button><button type="button">G84</button>
+      </div>
+    </div>
+
+    <section>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <a href="BackplotMF.dc.html" aria-label="Проверить на эскизе" style="display:flex;align-items:center;gap:6px;height:36px;padding:0 10px;border-radius:9px;border:1px solid #FF7AB666;background:#FF7AB61A;color:#FF9FCB;font:600 13px Inter,sans-serif;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>Эскиз</a>
+        <div class="seg" style="grid-template-columns:repeat(3,minmax(0,1fr));padding:2px;width:180px">
+          <button class="on" type="button" style="height:32px">X Y</button>
+          <button type="button" style="height:32px">G16</button>
+          <button type="button" style="height:32px">G65</button>
+        </div>
+      </div>
+      <div class="code">
+        <div><span class="g">G90 G00</span> <span class="a">X50.</span> <span class="a">Y0.</span></div>
+        <div><span class="g">G99 G81</span> <span class="a">Z-10.</span> <span class="a">R2.</span> <span class="f">F100.</span></div>
+        <div><span class="a">X25.</span> <span class="a">Y43.301</span></div>
+        <div><span class="a">X-25.</span> <span class="a">Y43.301</span></div>
+        <div><span class="a">X-50.</span> <span class="a">Y0.</span></div>
+        <div><span class="a">X-25.</span> <span class="a">Y-43.301</span></div>
+        <div><span class="g">G98</span> <span class="a">X25.</span> <span class="a">Y-43.301</span></div>
+        <div><span class="g">G80</span></div>
+      </div>
+      <div style="margin-top:6px;font-size:12px;color:#9AA4B1">G99 — возврат на R между отверстиями, G98 — в исходную плоскость на последнем.</div>
+    </section>
+
+    <div style="display:flex;gap:10px">
+      <button class="btn" type="button"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"></rect><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"></path></svg>Копировать</button>
+      <a class="btn pri" href="Program.dc.html" style="text-decoration:none"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>В программу</a>
+    </div>
+  </div>
+
+  <nav class="nav" aria-label="Разделы" style="margin-top:auto">
+    <a class="on" href="MainMF.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"></rect><path d="M8 7h8M8 12h2M14 12h2M8 16h2M14 16h2"></path></svg>Расчёты</a>
+    <a href="Program.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M10 13l-2 2 2 2M14 13l2 2-2 2"></path></svg>Программа</a>
+    <a href="Library.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>Библиотека</a>
+    <a href="Settings.dc.html"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M12 2v3M12 19v3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M2 12h3M19 12h3M4.9 19.1L7 17M17 7l2.1-2.1"></path></svg>Настройки</a>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1060}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
