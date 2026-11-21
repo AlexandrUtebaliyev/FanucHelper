@@ -23,5 +23,7 @@ export const TF = {
     { id: 'thread', title: 'Резьба', sub: 'G76 · G92', cat: 'cyc', icon: I.thread },
     { id: 'contour', title: 'Контур', sub: 'G71 · G70 · G72', cat: 'cyc', icon: I.contour },
     { id: 'modes', title: 'Режимы', sub: 'Vc · S · f · Ra', cat: 'mode', icon: I.modes },
+    { id: 'tolerance', title: 'Допуски ISO', sub: 'h7 → X19.99', cat: 'geo', icon: I.tol },
+    { id: 'importcheck', title: 'Импорт и проверка', sub: 'чужая программа', cat: 'set', icon: I.check },
   ],
 };

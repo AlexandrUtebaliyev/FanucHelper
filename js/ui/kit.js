@@ -75,6 +75,7 @@ export function formHtml(def, v) {
     if (f.show && !f.show(v)) continue;
     if (f.type === 'seg') { flush(); html += segHtml(f, v); }
     else if (f.type === 'check') { flush(); html += `<div><button type="button" class="tg ${v[f.k] ? 'on' : ''}" data-chk="${f.k}">${f.label}</button></div>`; }
+    else if (f.type === 'chips') { flush(); html += `<div class="tabs">${f.options.map((o) => `<button type="button" class="tg" data-chip="${f.id}" data-v="${esc(o)}">${esc(f.fmt ? f.fmt(o) : o)}</button>`).join('')}</div>`; }
     else if (f.type === 'note') { flush(); html += `<div class="note info">${f.text}</div>`; }
     else grid.push(fieldHtml(f, v));
   }
@@ -117,6 +118,7 @@ export function codeSection(lines, opts = {}) {
 export function actionHandlers(def, ctx, getState) {
   return (act) => {
     const { r, v } = getState();
+    if (act.startsWith('x:')) { if (def.onAct) def.onAct(act.slice(2), { r, v, ctx }); return; }
     if (!r || !r.code) return;
     const text = r.code.join('\n');
     const rec = { screen: def.id, title: r.title || def.title, tag: r.tag || def.tag || '', cat: def.cat, values: v };
@@ -159,9 +161,10 @@ export function renderScreen(root, def, ctx) {
     drawResult();
   });
   root.addEventListener('click', (e) => {
-    const b = e.target.closest('[data-seg],[data-chk],[data-act]');
+    const b = e.target.closest('[data-seg],[data-chk],[data-act],[data-chip]');
     if (!b) return;
-    if (b.dataset.seg) { v[b.dataset.seg] = b.dataset.v; store.setScreenValues(def.id, v); drawForm(); drawResult(); }
+    if (b.dataset.chip) { const f = def.form.find((x) => x.id === b.dataset.chip); if (f) f.apply(v, b.dataset.v); store.setScreenValues(def.id, v); drawForm(); drawResult(); }
+    else if (b.dataset.seg) { v[b.dataset.seg] = b.dataset.v; store.setScreenValues(def.id, v); drawForm(); drawResult(); }
     else if (b.dataset.chk) { v[b.dataset.chk] = !v[b.dataset.chk]; store.setScreenValues(def.id, v); drawForm(); drawResult(); }
     else if (b.dataset.act) act(b.dataset.act);
   });

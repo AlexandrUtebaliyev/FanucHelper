@@ -131,3 +131,36 @@ export function rotateLines(body, { x, y, angle, dec = 3 }) {
 }
 
 export { fmt };
+
+// Резьбофрезерование по результату core\mill\threadMill.js. Вход в центр на дно (или на верх при спуске),
+// полудуга с подъёмом P/2, полные витки с I J и подъёмом на P, полудуга отвода.
+export function threadMillLines(tm, { P, depth, F, safeZ = 5, dec = 3, sub = false, subNo = 8001 }) {
+  const { radius: r, fCenter, full, ccw, up, xc, yc } = tm;
+  const g = ccw ? 'G03' : 'G02';
+  const sgn = up ? 1 : -1;
+  const zStart = up ? -depth : 0; // снизу вверх — со дна, сверху вниз — с верха
+  const lines = [];
+  const circ = (x, y, i, j, dz) => join(g, word('X', x, dec), word('Y', y, dec), word('I', i, dec), word('J', j, dec), word('Z', zNow + dz, dec), word('F', fCenter, dec));
+  let zNow = zStart;
+  lines.push(join('G00', 'G90', word('Z', safeZ, dec)));
+  lines.push(join('G00', word('X', xc, dec), word('Y', yc, dec)));
+  lines.push(join('G01', word('Z', zStart, dec), word('F', F, dec)));
+  // вход: полудуга из центра на радиус r, подъём P/2
+  lines.push(circ(xc, yc - r, 0, -r / 2, sgn * P / 2));
+  zNow += sgn * P / 2;
+  if (sub) {
+    lines.push(join('M98', 'P' + subNo, 'L' + full));
+    zNow += sgn * P * full;
+  } else {
+    for (let k = 0; k < full; k++) {
+      lines.push(circ(xc, yc - r, 0, r, sgn * P));
+      zNow += sgn * P;
+    }
+  }
+  // отвод: полудуга на центр
+  lines.push(circ(xc, yc, 0, r / 2, sgn * P / 2));
+  zNow += sgn * P / 2;
+  lines.push(join('G00', word('Z', safeZ, dec)));
+  const subLines = sub ? [`O${subNo} (THREAD MILL TURN)`, join('G91', g, 'X0.', 'Y0.', word('I', 0, dec), word('J', r, dec), word('Z', sgn * P, dec), word('F', fCenter, dec)), 'G90', 'M99'] : null;
+  return { lines, subLines, zEnd: zNow };
+}

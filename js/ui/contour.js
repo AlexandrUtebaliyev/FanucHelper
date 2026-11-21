@@ -96,6 +96,8 @@ export function render(root, ctx) {
     else return;
     save(); drawResult();
   });
+  // текущая ячейка — сюда экран «Допуски ISO» подставляет размер кнопкой «В контур»
+  root.addEventListener('focusin', (e) => { const t = e.target; if (t.dataset && t.dataset.r !== undefined) store.save('cell', { r: +t.dataset.r, c: t.dataset.c }); });
   root.addEventListener('click', (e) => {
     const b = e.target.closest('[data-seg],[data-add],[data-del],[data-comp],[data-act]');
     if (!b) return;
