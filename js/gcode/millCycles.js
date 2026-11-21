@@ -164,3 +164,95 @@ export function threadMillLines(tm, { P, depth, F, safeZ = 5, dec = 3, sub = fal
   const subLines = sub ? [`O${subNo} (THREAD MILL TURN)`, join('G91', g, 'X0.', 'Y0.', word('I', 0, dec), word('J', r, dec), word('Z', sgn * P, dec), word('F', fCenter, dec)), 'G90', 'M99'] : null;
   return { lines, subLines, zEnd: zNow };
 }
+
+// ---------- карманы ----------
+// Контур прямоугольника со скруглёнными углами, против часовой. Возвращает вершины: {t:'L'|'A', x, y, i?, j?}
+function rectPath(xc, yc, ax, ay, rc, startMid) {
+  const segs = [];
+  const L = (x, y) => segs.push({ t: 'L', x, y });
+  const A = (x, y, i, j) => segs.push({ t: 'A', x, y, i, j });
+  const start = startMid ? { x: xc + ax, y: yc } : { x: xc + ax, y: yc - ay + rc };
+  L(xc + ax, yc + ay - rc);
+  if (rc > 1e-9) A(xc + ax - rc, yc + ay, -rc, 0);
+  L(xc - ax + rc, yc + ay);
+  if (rc > 1e-9) A(xc - ax, yc + ay - rc, 0, -rc);
+  L(xc - ax, yc - ay + rc);
+  if (rc > 1e-9) A(xc - ax + rc, yc - ay, rc, 0);
+  L(xc + ax - rc, yc - ay);
+  if (rc > 1e-9) A(xc + ax, yc - ay + rc, 0, rc);
+  if (startMid) L(xc + ax, yc);
+  return { start, segs };
+}
+
+export function pocketLines(plan, o) {
+  const dec = o.dec ?? 3;
+  const { safeZ = 5, fRough, fEntry = fRough / 2, fFinish = fRough, dNo = 1 } = o;
+  if (!(fRough > 0) || !(fEntry > 0) || !(fFinish > 0)) throw new Error('Задайте подачи');
+  if (!Number.isFinite(safeZ) || safeZ <= 0) throw new Error('Безопасный Z должен быть выше Z0 детали');
+  if (!(dNo >= 1)) throw new Error('Номер коррекции D — от 1');
+  const { xc, yc, shape } = plan;
+  const lines = [];
+  // cur — текущая точка; нулевые перемещения (вырожденные контуры) пропускаются
+  const emit = (path, cur) => {
+    let modal = null;
+    let at = { ...cur };
+    for (const s of path) {
+      if (s.t === 'L') {
+        if (Math.hypot(s.x - at.x, s.y - at.y) < 1e-9) continue;
+        lines.push(join(modal === 'G01' ? '' : 'G01', word('X', s.x, dec), word('Y', s.y, dec)));
+        modal = 'G01';
+      } else { lines.push(join('G03', word('X', s.x, dec), word('Y', s.y, dec), word('I', s.i, dec), word('J', s.j, dec))); modal = 'G03'; }
+      at = { x: s.x, y: s.y };
+    }
+  };
+  const loopPath = (lp, startMid = false) => {
+    if (shape === 'circle') {
+      return { start: { x: xc + lp.r, y: yc }, segs: [{ t: 'A', x: xc + lp.r, y: yc, i: -lp.r, j: 0 }] };
+    }
+    return rectPath(xc, yc, lp.ax, lp.ay, lp.rc, startMid);
+  };
+  lines.push(join('G00', 'G90', word('Z', safeZ, dec)));
+  lines.push(join('G00', word('X', xc, dec), word('Y', yc, dec)));
+  let zPrev = 0;
+  plan.levels.forEach((z, k) => {
+    // --- врезание ---
+    if (k === 0) lines.push(join('G00', word('Z', Math.min(safeZ, 1), 3)));
+    if (plan.entry === 'helix') {
+      const Rh = plan.helixR;
+      lines.push(join('G01', word('X', xc + Rh, dec), word('Y', yc, dec), k === 0 ? join('Z' + fmt(zPrev, dec), word('F', fEntry, dec)) : ''));
+      for (let t = 1; t <= plan.turns; t++) {
+        lines.push(join('G03', word('X', xc + Rh, dec), word('Y', yc, dec), word('I', -Rh, dec), word('J', 0, dec), word('Z', zPrev + ((z - zPrev) * t) / plan.turns, dec), t === 1 ? word('F', fEntry, dec) : ''));
+      }
+      lines.push(join('G03', word('X', xc + Rh, dec), word('Y', yc, dec), word('I', -Rh, dec), word('J', 0, dec)));
+    } else {
+      const l = plan.ramp.leg;
+      lines.push(join('G01', word('X', xc - l / 2, dec), word('Y', yc, dec), k === 0 ? join('Z' + fmt(zPrev, dec), word('F', fEntry, dec)) : ''));
+      lines.push(join('G01', word('X', xc + l / 2, dec), word('Z', (zPrev + z) / 2, dec), word('F', fEntry, dec)));
+      lines.push(join('G01', word('X', xc - l / 2, dec), word('Z', z, dec)));
+    }
+    // --- черновые контуры изнутри наружу ---
+    plan.loops.forEach((lp, i) => {
+      const p = loopPath(lp);
+      lines.push(join('G01', word('X', p.start.x, dec), word('Y', p.start.y, dec), i === 0 ? word('F', fRough, dec) : ''));
+      emit(p.segs, p.start);
+    });
+    // --- чистовая стенка с G41 ---
+    {
+      const ra = plan.ra;
+      const f = plan.finish;
+      const wallX = xc + (shape === 'circle' ? f.R : f.ax);
+      const S = { x: wallX - ra, y: yc - ra };
+      lines.push(join('G41', 'G01', word('X', S.x, dec), word('Y', S.y, dec), 'D' + int(dNo), word('F', fFinish, dec)));
+      lines.push(join('G03', word('X', wallX, dec), word('Y', yc, dec), word('I', 0, dec), word('J', ra, dec)));
+      let path;
+      if (shape === 'circle') path = [{ t: 'A', x: wallX, y: yc, i: -f.R, j: 0 }];
+      else path = rectPath(xc, yc, f.ax, f.ay, f.rc, true).segs;
+      emit(path, { x: wallX, y: yc });
+      lines.push(join('G03', word('X', wallX - ra, dec), word('Y', yc + ra, dec), word('I', -ra, dec), word('J', 0, dec)));
+      lines.push(join('G40', 'G01', word('X', xc, dec), word('Y', yc, dec)));
+    }
+    zPrev = z;
+  });
+  lines.push(join('G00', word('Z', safeZ, dec)));
+  return lines;
+}

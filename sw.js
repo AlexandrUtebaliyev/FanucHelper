@@ -1,5 +1,5 @@
 // Service Worker: кэш всех файлов приложения, работа офлайн. Список ASSETS обновляется скриптом tools\\sw-list.js
-const CACHE = 'fh-vmwpy01wm';
+const CACHE = 'fh-vmwpzgcwi';
 const ASSETS = [
   './',
   './css/app.css',
@@ -14,6 +14,7 @@ const ASSETS = [
   './js/core/mill/boltCircle.js',
   './js/core/mill/facing.js',
   './js/core/mill/millCutting.js',
+  './js/core/mill/pocket.js',
   './js/core/mill/probing.js',
   './js/core/mill/tangent.js',
   './js/core/mill/threadMill.js',
@@ -53,6 +54,7 @@ const ASSETS = [
   './js/ui/millmodes.js',
   './js/ui/modes.js',
   './js/ui/nose.js',
+  './js/ui/pocket.js',
   './js/ui/probing.js',
   './js/ui/program.js',
   './js/ui/settings.js',

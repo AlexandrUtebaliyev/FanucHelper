@@ -9,6 +9,7 @@ const I = {
   check: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M8 15l3 3 5-6"/>',
   probe: '<path d="M12 3v10"/><circle cx="12" cy="17" r="3"/><path d="M3 21h18"/>',
   tmill: '<path d="M4 8c3-3 5 3 8 0s5 3 8 0M4 14c3-3 5 3 8 0s5 3 8 0"/>',
+  pocket: '<rect x="3" y="5" width="18" height="14" rx="4"/><rect x="8" y="9" width="8" height="6" rx="2"/>',
   rot: '<path d="M21 12a9 9 0 1 1-3-6.7M21 4v5h-5"/>',
 };
 
@@ -20,6 +21,7 @@ export const MF = {
     { id: 'tangent', title: 'Сопряжения', sub: 'R · точки касания', cat: 'geo', icon: I.tangent },
     { id: 'transform', title: 'Полярные · поворот', sub: 'G16 · G68 · треугольник', cat: 'geo', icon: I.rot },
     { id: 'facing', title: 'Торцовка', sub: 'зигзаг · время', cat: 'cyc', icon: I.facing },
+    { id: 'pocket', title: 'Карманы', sub: 'спираль · G41', cat: 'cyc', icon: I.pocket },
     { id: 'millmodes', title: 'Режимы', sub: 'Vc · S · fz · метчик', cat: 'mode', icon: I.modes },
     { id: 'threadmill', title: 'Резьбофреза', sub: 'G03 · винтовая', cat: 'cyc', icon: I.tmill },
     { id: 'tolerance', title: 'Допуски ISO', sub: 'h7 → X19.99', cat: 'geo', icon: I.tol },

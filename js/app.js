@@ -12,6 +12,7 @@ const ROUTES = {
   bolt: () => import('./ui/bolt.js'),
   tangent: () => import('./ui/tangent.js'),
   transform: () => import('./ui/transform.js'),
+  pocket: () => import('./ui/pocket.js'),
   facing: () => import('./ui/facing.js'),
   millmodes: () => import('./ui/millmodes.js'),
   macros: () => import('./ui/macros.js'),

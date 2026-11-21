@@ -192,3 +192,53 @@ test('экран «Отверстия»: ошибки не пропускают 
 });
 test('smoke: fmt', () => assert.equal(fmt(43.30127), '43.301'));
 void contour;
+
+import pocketScreen from '../js/ui/pocket.js';
+import { planPocket } from '../js/core/mill/pocket.js';
+import { pocketLines } from '../js/gcode/millCycles.js';
+
+const PD = { shape: 'rect', xc: 0, yc: 0, L: 60, B: 40, Rc: 6, Dp: 40, D: 10, depth: 10, ap: 3, step: 40, fin: 0.2, entry: 'helix', ang: 3, hp: 1, f: 600, fe: 300, ff: 400, safe: 5, dno: 1 };
+const cases = [['rect', 'helix'], ['rect', 'ramp'], ['circle', 'helix'], ['circle', 'ramp']];
+
+test('карманы: все варианты дают код без ошибок', () => {
+  for (const [shape, entry] of cases) {
+    const r = pocketScreen.calc({ ...PD, shape, entry }, S);
+    assert.ok(!r.err, `${shape}/${entry}: ${r.err}`);
+    assert.ok(r.code.length > 10);
+  }
+});
+test('карманы: код MF без U/W, G41 с отменой G40, G90 в начале', () => {
+  for (const [shape, entry] of cases) {
+    const code = pocketScreen.calc({ ...PD, shape, entry }, S).code;
+    for (const l of code) assert.ok(!/(^|\s)[UW]-?[\d.]/.test(l), l);
+    const on = code.filter((l) => l.startsWith('G41')).length, off = code.filter((l) => l.startsWith('G40')).length;
+    assert.equal(on, 4); assert.equal(on, off); // 4 уровня: 10 мм / ap 3 → 4 прохода
+    assert.equal(code[0], 'G00 G90 Z5.');
+  }
+});
+test('карманы: парсер — дуги сходятся, G40 после G41, все G00 только на безопасном Z, дно на -10', () => {
+  for (const [shape, entry] of cases) {
+    const code = pocketScreen.calc({ ...PD, shape, entry }, S).code;
+    const a = analyze(code.join('\n'), { profile: 'MF' });
+    for (const c of a.checks) assert.notEqual(c.level, 'bad', `${shape}/${entry} ${c.title} ${JSON.stringify(c.items)}`);
+    const p = a.parsed.moves;
+    assert.ok(p.every((m) => m.type !== 'G02' && m.type !== 'G03' ? true : !m.mismatch));
+    assert.ok(Math.min(...p.map((m) => m.to.z)) <= -9.999 && Math.min(...p.map((m) => m.to.z)) >= -10.0001);
+    for (const m of p.filter((x) => x.type === 'G00')) assert.ok(m.to.z >= 1 - 1e-9, 'G00 в материал');
+  }
+});
+test('карманы: чистовая стенка лежит на контуре кармана (X = ±30, Y = ±20)', () => {
+  const code = pocketScreen.calc(PD, S).code;
+  const p = analyze(code.join('\n'), { profile: 'MF' }).parsed.moves;
+  const xs = p.filter((m) => m.comp === 'G41').map((m) => Math.abs(m.to.x));
+  assert.ok(xs.includes(30));
+  assert.ok(Math.max(...p.filter((m) => m.comp === 'G41').map((m) => Math.abs(m.to.y))) <= 20 + 1e-9);
+});
+test('карманы: опасные размеры блокируются', () => {
+  assert.match(planPocket({ ...PD, stepPct: 40, Rc: 3, D: 10, L: 60, B: 40, shape: 'rect', stepPct: 40, depth: 10, ap: 3, fin: 0.2, entry: 'helix' }).error, /Радиус угла/);
+  assert.match(planPocket({ shape: 'rect', L: 9, B: 40, Rc: 6, D: 10, depth: 5, ap: 2, stepPct: 40, fin: 0.2 }).error, /уже фрезы/);
+  assert.match(planPocket({ shape: 'rect', L: 60, B: 16, Rc: 5, D: 10, depth: 5, ap: 2, stepPct: 40, fin: 0, entry: 'helix' }).error, /узкий для спирали/);
+  assert.match(planPocket({ shape: 'rect', L: 60, B: 40, Rc: 6, D: 10, depth: 5, ap: 2, stepPct: 70, fin: 0.2 }).error, /остров/);
+  assert.throws(() => pocketLines(planPocket({ ...PD, stepPct: 40 }), { fRough: 0, safeZ: 5 }), /подачи/);
+  assert.throws(() => pocketLines(planPocket({ ...PD, stepPct: 40 }), { fRough: 100, safeZ: 0 }), /Безопасный/);
+});
