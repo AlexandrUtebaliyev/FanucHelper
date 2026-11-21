@@ -32,6 +32,15 @@ const ROUTES = {
 
 const app = document.getElementById('app');
 
+// Кнопка «Установить» (Chrome/Android): событие приходит только на https или localhost
+let installEvt = null;
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); installEvt = e; document.querySelectorAll('[data-install]').forEach((b) => { b.hidden = false; }); });
+window.addEventListener('click', (e) => {
+  if (e.target.closest('[data-install]') && installEvt) { installEvt.prompt(); installEvt = null; document.querySelectorAll('[data-install]').forEach((b) => { b.hidden = true; }); }
+});
+window.addEventListener('appinstalled', () => { installEvt = null; });
+export const canInstall = () => !!installEvt;
+
 async function route() {
   const key = location.hash.replace(/^#\/?/, '').split('?')[0];
   const ctx = { settings: getSettings(), rerender: route };
@@ -51,6 +60,7 @@ async function route() {
   } catch (e) {
     host.innerHTML = `${topHtml('Ошибка')}<div class="page"><div class="note bad">${String(e.message).replace(/[<>&]/g, '')}</div></div>`;
   }
+  if (installEvt) host.querySelectorAll('[data-install]').forEach((b) => { b.hidden = false; });
   window.scrollTo(0, 0);
 }
 

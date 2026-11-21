@@ -1,8 +1,10 @@
 // Service Worker: кэш всех файлов приложения, работа офлайн. Список ASSETS обновляется скриптом tools\\sw-list.js
-const CACHE = 'fh-vmwpzgcwi';
+const CACHE = 'fh-vmwpzsyoc';
 const ASSETS = [
   './',
   './css/app.css',
+  './icon-192.png',
+  './icon-512.png',
   './icon.svg',
   './index.html',
   './js/app.js',

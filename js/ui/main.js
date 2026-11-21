@@ -32,6 +32,7 @@ export function render(root, ctx) {
   <section style="padding:0 20px"><h2 class="h2">Последние расчёты</h2>
     <div class="grp">${recent.length ? recent.slice(0, 6).map((r, i) => recRow(r, i, 'rec')).join('') : '<div class="rec" style="color:#9AA4B1;font-size:14px">Пока пусто — расчёты появятся здесь после «Копировать» или «В программу»</div>'}</div>
   </section>
+  <section style="padding:0 20px"><button type="button" class="btn" data-install hidden style="width:100%">Установить приложение на устройство</button></section>
   <section style="padding:20px">${disclaimerHtml()}</section>
   <div style="flex:1"></div>
   ${navHtml('#/')}`;
