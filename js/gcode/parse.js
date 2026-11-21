@@ -76,6 +76,9 @@ export function parseGcode(text, { profile = 'TF', holder = 'rear' } = {}) {
       if (special && ['G70', 'G71', 'G72', 'G73', 'G74', 'G75'].includes(special)) {
         out.cycles.push({ code: special, line: lineNo, p: get(ws, 'P'), q: get(ws, 'Q'), u: get(ws, 'U'), w: get(ws, 'W'), r: get(ws, 'R'), f: get(ws, 'F'), x: get(ws, 'X'), z: get(ws, 'Z') });
         blk.flags.push('cycle');
+        // циклы черновой/чистовой обработки возвращают инструмент в точку старта цикла
+        if (['G71', 'G72', 'G73'].includes(special) && has(ws, 'P') && st.pos) st.cycStart = clone(st.pos);
+        if (special === 'G70' && st.cycStart) st.pos = clone(st.cycStart);
         return;
       }
       if (special === 'G76') {

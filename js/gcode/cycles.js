@@ -107,3 +107,47 @@ export function roughingLines(o) {
   lines.push(join('G70', 'P' + ns, 'Q' + nf, _w('F', fFinish, dec)));
   return { lines, warn, segs, startX };
 }
+
+// ---------- G75 канавка / отрезка, G74 сверление по оси ----------
+// Δi, Δk — в микронах целыми без точки. Δd (отвод на дне) — только 0: формат R второго блока нужно сверить с руководством.
+export function g75Lines(o) {
+  assertSystemA(o.gsys);
+  const dec = o.dec ?? 3;
+  const { width, d0, dBottom, z, grooveW, dI, dK, e = 0.5, f, anchor = 'left', relief = 0 } = o;
+  if (!(width > 0)) throw new Error('Задайте ширину пластины');
+  if (!(d0 > dBottom) || !(dBottom >= 0)) throw new Error('Ø начала должен быть больше Ø дна канавки');
+  if (!(grooveW >= width - 1e-9)) throw new Error('Ширина канавки меньше ширины пластины');
+  if (!(dI > 0) || !(dK > 0)) throw new Error('Задайте шаги Δi и Δk больше 0');
+  if (dK >= width) throw new Error('Шаг по Z (Δk) должен быть меньше ширины пластины, иначе останутся гребни');
+  if (!(f > 0)) throw new Error('Задайте подачу F');
+  if (relief) throw new Error('Отвод на дне Δd: формат R второго блока G75 нужно сверить с руководством — оставьте 0');
+  const z1 = z, z2 = z - grooveW; // правый (к торцу) и левый (к патрону) края канавки
+  const zStart = anchor === 'left' ? z1 - width : z1;
+  const zEnd = anchor === 'left' ? z2 : z2 + width;
+  return [
+    join('G00', word('X', d0 + 2, dec), word('Z', zStart, dec)),
+    join('G75', word('R', e, dec)),
+    join('G75', word('X', dBottom, dec), word('Z', zEnd, dec), 'P' + micro(dI), 'Q' + micro(dK), word('F', f, dec)),
+    join('G00', word('X', d0 + 2, dec)),
+  ];
+}
+
+export function g74Lines(o) {
+  assertSystemA(o.gsys);
+  const dec = o.dec ?? 3;
+  const { D, depth, peck, e = 1, f, vc, rpm, zStart = 2 } = o;
+  if (!(D > 0) || !(depth > 0)) throw new Error('Задайте Ø сверла и глубину');
+  if (!(peck > 0)) throw new Error('Задайте клевок Δk больше 0');
+  if (!(f > 0)) throw new Error('Задайте подачу F');
+  const tip = 0.3 * D; // заборный конус сверла 118°
+  const zEnd = -(depth + tip);
+  const S = rpm > 0 ? rpm : vc > 0 ? Math.round((1000 * vc) / (Math.PI * D)) : 0;
+  if (!(S > 0)) throw new Error('Задайте обороты или Vc');
+  return [
+    join('G97', 'S' + int(S), 'M03'),
+    join('G00', word('X', 0, dec), word('Z', zStart, dec)),
+    join('G74', word('R', e, dec)),
+    join('G74', word('Z', zEnd, dec), 'Q' + micro(peck), word('F', f, dec)),
+    join('G00', word('Z', zStart, dec)),
+  ];
+}

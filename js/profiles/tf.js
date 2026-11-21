@@ -22,6 +22,8 @@ export const TF = {
     { id: 'nose', title: 'Радиус пластины', sub: 'без G41/G42', cat: 'geo', icon: I.nose },
     { id: 'thread', title: 'Резьба', sub: 'G76 · G92', cat: 'cyc', icon: I.thread },
     { id: 'contour', title: 'Контур', sub: 'G71 · G70 · G72', cat: 'cyc', icon: I.contour },
+    { id: 'groove', title: 'Канавка', sub: 'G75', cat: 'cyc', icon: I.groove },
+    { id: 'drill', title: 'Сверление', sub: 'G74', cat: 'cyc', icon: I.drill },
     { id: 'modes', title: 'Режимы', sub: 'Vc · S · f · Ra', cat: 'mode', icon: I.modes },
     { id: 'tolerance', title: 'Допуски ISO', sub: 'h7 → X19.99', cat: 'geo', icon: I.tol },
     { id: 'importcheck', title: 'Импорт и проверка', sub: 'чужая программа', cat: 'set', icon: I.check },
